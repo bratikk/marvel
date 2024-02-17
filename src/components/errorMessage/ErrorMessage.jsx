@@ -1,14 +1,9 @@
-import errorImg from './error.gif';
+import img from './error.gif';
 
 const ErrorMessage = () => {
-   return (
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-         <img
-            src={errorImg}
-            alt="Error img"
-            style={{ display: 'block', width: 250, margin: '0 auto' }}
-         />
-      </div>
-   );
-};
+    return (
+        <img style={{ display: 'block', width: "250px", height: "250px",objectFit: 'contain', margin: "0 auto"}}  src={img} alt="Error"/>
+    )
+}
+
 export default ErrorMessage;
