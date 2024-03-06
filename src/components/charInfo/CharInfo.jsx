@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-
 import useMarvelService from '../../services/MarvelService';
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage';
-import Skeleton from '../skeleton/Skeleton';
+
+import PropTypes from 'prop-types';
+import setContent from '../../utils/setContent';
 
 import './charInfo.scss';
 
 const CharInfo = props => {
    const [char, setChar] = useState(null);
-   const { loading, error, getCharacter } = useMarvelService();
+   const { process, setProcess, getCharacter } = useMarvelService();
 
    useEffect(() => {
       updateChar();
@@ -21,26 +19,16 @@ const CharInfo = props => {
       if (!charId) {
          return;
       }
-      getCharacter(charId).then(onCharLoaded);
+      getCharacter(charId)
+         .then(onCharLoaded)
+         .then(() => setProcess('succsess'));
    };
 
    const onCharLoaded = char => {
       setChar(char);
    };
 
-   const spinner = loading ? <Spinner /> : null;
-   const errorMessage = error ? <ErrorMessage /> : null;
-   const skeleton = char || loading || error ? null : <Skeleton />;
-   const content = !(loading || error || !char) ? <View char={char} /> : null;
-
-   return (
-      <div className="char__info">
-         {skeleton}
-         {errorMessage}
-         {spinner}
-         {content}
-      </div>
-   );
+   return <div className="char__info">{setContent(process, char)}</div>;
 };
 
 const View = ({ char }) => {
@@ -62,7 +50,7 @@ const View = ({ char }) => {
                <div className="char__info-name">{name}</div>
                <div className="char__btns">
                   <a href={homepage} className="button button__main">
-                     <div className="inner">homepage</div>
+                     <div className="inner">Homepage</div>
                   </a>
                   <a href={wiki} className="button button__secondary">
                      <div className="inner">Wiki</div>

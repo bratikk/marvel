@@ -5,7 +5,8 @@ const useMarvelService = () => {
    const _apiKey = 'apikey=c5d6fc8b83116d92ed468ce36bac6c62';
    const _baseOffsetCharacter = 210;
 
-   const { loading, request, error, clearError } = useHttp();
+   const { loading, request, error, process, setProcess, clearError } =
+      useHttp();
 
    const getComic = async id => {
       const res = await request(`${_apiBase}comics/${id}?${_apiKey}`);
@@ -65,7 +66,9 @@ const useMarvelService = () => {
    return {
       error,
       loading,
+      process,
       getComic,
+      setProcess,
       clearError,
       getCharacter,
       getAllComics,
