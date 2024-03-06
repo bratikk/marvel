@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 import CharInfo from '@components/charInfo/CharInfo';
 import CharList from '@components/charList/CharList';
 import ErrorBoundary from '@components/errorBoundary/ErrorBoundary';
 import RandomChar from '@components/randomChar/RandomChar';
+import CharSearchForm from '@components/charSearchForm/CharSearchForm';
 
 import decoration from '../resources/img/vision.png';
 
@@ -16,6 +18,10 @@ const MainPage = () => {
 
    return (
       <>
+         <Helmet>
+            <title>Marvel</title>
+            <meta name="description" content="Marvel information portal" />
+         </Helmet>
          <ErrorBoundary>
             <RandomChar />
          </ErrorBoundary>
@@ -23,9 +29,15 @@ const MainPage = () => {
             <ErrorBoundary>
                <CharList onCharSelected={onCharSelected} />
             </ErrorBoundary>
-            <ErrorBoundary>
-               <CharInfo charId={selectedChar} />
-            </ErrorBoundary>
+
+            <div>
+               <ErrorBoundary>
+                  <CharInfo charId={selectedChar} />
+               </ErrorBoundary>
+               <ErrorBoundary>
+                  <CharSearchForm />
+               </ErrorBoundary>
+            </div>
          </div>
          <img className="bg-decoration" src={decoration} alt="vision" />
       </>

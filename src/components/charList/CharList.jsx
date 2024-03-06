@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -55,28 +56,34 @@ const CharList = props => {
          }
 
          return (
-            <li
-               tabIndex={0}
-               key={item.id}
-               className="char__item"
-               ref={el => (itemRefs.current[i] = el)}
-               onClick={() => {
-                  props.onCharSelected(item.id);
-                  focusOnItem(i);
-               }}
-               onKeyPress={e => {
-                  if (e.key === ' ' || e.key === 'Enter') {
+            <CSSTransition key={i} timeout={700} classNames="item">
+               <li
+                  tabIndex={0}
+                  key={item.id}
+                  className="char__item"
+                  ref={el => (itemRefs.current[i] = el)}
+                  onClick={() => {
                      props.onCharSelected(item.id);
                      focusOnItem(i);
-                  }
-               }}
-            >
-               <img src={item.thumbnail} alt={item.name} style={imgStyle} />
-               <div className="char__name">{item.name}</div>
-            </li>
+                  }}
+                  onKeyPress={e => {
+                     if (e.key === ' ' || e.key === 'Enter') {
+                        props.onCharSelected(item.id);
+                        focusOnItem(i);
+                     }
+                  }}
+               >
+                  <img src={item.thumbnail} alt={item.name} style={imgStyle} />
+                  <div className="char__name">{item.name}</div>
+               </li>
+            </CSSTransition>
          );
       });
-      return <ul className="char__grid">{items}</ul>;
+      return (
+         <ul>
+            <TransitionGroup className="char__grid">{items}</TransitionGroup>
+         </ul>
+      );
    }
 
    const items = renderItems(charList);
