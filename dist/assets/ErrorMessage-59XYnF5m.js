@@ -1,0 +1,1 @@
+import{j as r}from"./index-bmDqCmmW.js";const t="/assets/error-QR_7rMUB.gif",o=()=>r.jsx("img",{style:{display:"block",width:"250px",height:"250px",objectFit:"contain",margin:"0 auto"},src:t,alt:"Error"});export{o as E};
